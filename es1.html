@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <table>
+            <tr>
+                <td style="border: 1px solid black"><b>ID Studente</b></td>
+                <td style = "border: 1px solid black"><input type="number" id = "idStudente" placeholder="Inserisci ID studente"></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black"><b>Ore di Frequenza</b></td>
+                <td style = "border: 1px solid black"><input type = "number" id = "oreFrequenza" placeholder="Inserisci ore di frequenza"></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black"><button type = "button" onclick="aggiungiIscrizione()">Aggiungi Iscrizione</button></td>
+                <td style = "border: 1px solid black"><button type = "button" onclick="mostraIscrizioni()">Mostra Iscrizioni</button></td>
+            </tr>
+        </table>
+    </form>
+    <div id="risultato"></div>
+</body>
+<script>
+    var studenti = [];
+    function aggiungiIscrizione(){
+        var idStudente = document.getElementById("idStudente").value;
+        var oreFrequenza = document.getElementById("oreFrequenza").value;
+
+        function verificaIdStudente(){
+            if(idStudente==isNaN){
+                alert("Id Studente non valido!")
+                idStudente= document.getElementById("idStudente").value = "Non valido";
+
+            }
+        }
+
+        function verificaOreFrequenza(){
+            if(oreFrequenza<=0){
+                alert("Ore di frequenza inserite non valide!")
+                oreFrequenza=document.getElementById("oreFrequenza").value = "Non valido";
+            }
+        }
+
+        function calcoloQuota(){
+            const costo = 15;
+            let quota = 0;
+            if (oreFrequenza>=1 && oreFrequenza<=10){
+                quota = costo * oreFrequenza
+            }else if(oreFrequenza>=11 && oreFrequenza<=20){
+                quota = costo * oreFrequenza
+                quota -= (quota/100) * 5 
+            }else if(oreFrequenza>20){
+                quota = costo * oreFrequenza
+                quota -= (quota/100) * 10 
+            }
+            return quota
+        }
+
+        verificaOreFrequenza();
+
+        studenti.push({idStudente:idStudente, oreFrequenza:oreFrequenza, quota:calcoloQuota()});
+        console.log(studenti)
+        idStudente = document.getElementById("idStudente").value = "";
+        oreFrequenza = document.getElementById("oreFrequenza").value = "";
+    }
+
+    function mostraIscrizioni(){
+        var tabella = `
+                        <table>
+                            <tr>
+                                <td style="border: 1px solid black"><b>QUOTE ISCRIZIONI</b></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid black"><b>ID Studente</b></td>
+                                <td style="border: 1px solid black"><b>Ore di Frequenza</b></td>
+                                <td style="border: 1px solid black"><b>Quota Totale</b></td>
+                            </tr>
+                    `;
+
+        for (let studente of studenti){
+            tabella +=     `                    
+                            <tr>
+                                <td style="border: 1px solid black">${studente.idStudente}</td>
+                                <td style="border: 1px solid black">${studente.oreFrequenza}</td>
+                                <td style="border: 1px solid black">${studente.quota}</td>
+                            </tr>
+                            `;
+                            
+        }
+
+        tabella += `</table>`
+
+        document.getElementById("risultato").innerHTML = tabella;
+    }
+</script>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <table>
+            <tr>
+                <td style="border: 1px solid black"><b>Costo prodotto</b></td>
+                <td style = "border: 1px solid black"><input type="number" id = "costo" placeholder="Inserisci Il costo"></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black"><b>Valore cassa iniziale</b></td>
+                <td style = "border: 1px solid black"><input type = "number" id = "valoreCassaIniziale" disabled value="100"></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black"><button type = "button" onclick="aggiungiProdotto()">Aggiungi prodotto</button></td>
+                <td style = "border: 1px solid black"><button type = "button" onclick="mostraValoreCassaAttuale()">Mostra valore cassa attuale</button></td>
+            </tr>
+        </table>
+    </form>
+    <div id="risultato"></div>
+</body>
+<script>
+    var calcola_cassa = [];
+    function aggiungiProdotto(){
+        var costo = document.getElementById("costo").value;
+        var valoreCassaIniziale = document.getElementById("valoreCassaIniziale").value;
+
+        function verificaCosto(){
+            if(costo<=0){
+                alert("Valore costo del prodotto non valido!")
+                oreFrequenza=document.getElementById("oreFrequenza").value = "Non valido";
+            }
+        }
+
+        verificaCosto();
+
+        calcola_cassa.push({costo:costo});
+
+        costo = document.getElementById("costo").value = "";
+    }
+
+    function mostraValoreCassaAttuale(){
+        var valoreCassaAttuale = valoreCassaIniziale
+        
+        for (let prezzo of calcola_cassa){
+            valoreCassaAttuale+=calcola_cassa.cost
+        }
+        
+        var tabella = `
+                        <table>
+                            <tr>
+                                <td style="border: 1px solid black"><b>VENDITE GIORNALIERE</b></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid black"><b>Valore cassa attuale</b></td>
+                        
+                    `;
+
+            tabella +=     `                    
+                                <td style="border: 1px solid black">${valoreCassaAttuale}</td>
+                            </tr>
+                            `;
+                            
+
+        tabella += `</table>`
+
+        document.getElementById("risultato").innerHTML = tabella;
+    }
+</script>
+</html>
