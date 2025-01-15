@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Es1</title>
+</head>
+<body>
+    <form>
+        <table>
+            <tr>
+                <td style="border: 1px solid black"><b>ID Utente</b></td>
+                <td style = "border: 1px solid black"><input type="number" id = "idUtente" placeholder="Inserisci ID utente"></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black"><b>Titolo</b></td>
+                <td style = "border: 1px solid black"><input type = "text" id = "Titolo" placeholder="Inserisci il titolo del libro"></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black"><b>Giorni</b></td>
+                <td style = "border: 1px solid black"><input type = "number" id = "Giorni" placeholder="Inserisci i giorni"></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black"><button type = "button" onclick="addBooking()">Aggiungi prenotazione</button></td>
+            </tr>
+        </table>
+    </form>
+    <div id="risultato"></div>
+
+    <div id="riepilogo"></div>
+</body>
+<script>
+    var prenotazioni = [];
+    var sommario = [];
+    function addBooking(){
+        var idUtente = document.getElementById("idUtente").value;
+        var Titolo = document.getElementById("Titolo").value;
+        var Giorni = document.getElementById("Giorni").value;
+
+        function verificaIdUtente(){
+            if(idUtente==""){
+                alert("Id Utente non valido!")
+                idUtente = document.getElementById("idUtente").value = "Non valido";
+            }
+        }
+
+        function verificaTitolo(){
+            if(Titolo==""){
+                alert("Titolo inserito non valido!")
+                Titolo = document.getElementById("Titolo").value = "Non valido";
+            }
+        }
+
+        function verificaGiorni(){
+            if(Giorni<=0 || Giorni==""){
+                alert("Valore giorni inseriti non validi!")
+                Giorni=document.getElementById("Giorni").value = "Non valido";
+            }
+        }
+
+        function renderTable(){
+        var tabella = `
+                        <table>
+                            <tr>
+                                <td style="border: 1px solid black"><b>Prenotazioni</b></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid black"><b>ID Utente</b></td>
+                                <td style="border: 1px solid black"><b>Titolo</b></td>
+                                <td style="border: 1px solid black"><b>Giorni</b></td>
+                            </tr>
+                    `;
+
+        for (let prenotazione of prenotazioni){
+            tabella +=     `                    
+                            <tr>
+                                <td style="border: 1px solid black">${prenotazione.idUtente}</td>
+                                <td style="border: 1px solid black">${prenotazione.Titolo}</td>
+                                <td style="border: 1px solid black">${prenotazione.Giorni}</td>
+                            </tr>
+                            `;
+                            
+        }
+
+        tabella += `</table>`
+
+        document.getElementById("risultato").innerHTML = tabella;
+    }
+       function updateSummary(){
+        var riepilogo = `
+                        <h3> RIEPILOGO </h3>
+                    `;
+        
+        let trovato=false;
+        for (let utenti of sommario){
+            if (idUtente == utenti.idUtente){
+                utenti.Giorni+=parseInt(Giorni)
+                trovato = true
+            } 
+        }
+
+        if (trovato == false){
+            sommario.push({idUtente:idUtente,Giorni:parseInt(Giorni)})
+        }
+
+        for (let utente of sommario){
+            riepilogo +=     `                    
+                                <p>Utente ${utente.idUtente}: ${utente.Giorni} giorni.</p>
+                            `;            
+        }
+        document.getElementById("riepilogo").innerHTML = riepilogo
+       }
+
+        verificaIdUtente();
+        verificaTitolo();
+        verificaGiorni();
+
+        prenotazioni.push({idUtente:idUtente, Titolo:Titolo, Giorni:Giorni});
+
+        renderTable();
+        updateSummary();
+
+        idUtente = document.getElementById("idUtente").value = "";
+        Titolo = document.getElementById("Titolo").value = "";
+        Giorni = document.getElementById("Giorni").value = "";
+        
+    }
+
+</script>
+</html>
