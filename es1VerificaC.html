@@ -40,21 +40,21 @@
         function verificaIdUtente(){
             if(idUtente==""){
                 alert("Id Utente non valido!")
-                idUtente = document.getElementById("idUtente").value = "Non valido";
+                idUtente = document.getElementById("idUtente").value = "";
             }
         }
 
         function verificaTitolo(){
             if(Titolo==""){
                 alert("Titolo inserito non valido!")
-                Titolo = document.getElementById("Titolo").value = "Non valido";
+                Titolo = document.getElementById("Titolo").value = "";
             }
         }
 
         function verificaGiorni(){
             if(Giorni<=0 || Giorni==""){
                 alert("Valore giorni inseriti non validi!")
-                Giorni=document.getElementById("Giorni").value = "Non valido";
+                Giorni=document.getElementById("Giorni").value = "";
             }
         }
 
@@ -115,10 +115,11 @@
         verificaTitolo();
         verificaGiorni();
 
-        prenotazioni.push({idUtente:idUtente, Titolo:Titolo, Giorni:Giorni});
-
-        renderTable();
-        updateSummary();
+        if (idUtente!="" && Titolo!="" && Giorni!=""){
+            prenotazioni.push({idUtente:idUtente, Titolo:Titolo, Giorni:Giorni});
+            renderTable();
+            updateSummary();
+        }
 
         idUtente = document.getElementById("idUtente").value = "";
         Titolo = document.getElementById("Titolo").value = "";
