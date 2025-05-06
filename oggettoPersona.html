@@ -1,0 +1,20 @@
+<html>
+    <body>
+        <div id="risultato"> </div>
+    </body>
+</html>
+<script>
+    let persona = {
+        nome: "Fabio",
+        cognome: "Illiano",
+        annoNascita: 2006
+    }
+
+    function calcolaEta(persona){
+        let annoCorrente = 2025
+        return annoCorrente-persona.annoNascita
+    }
+
+    let eta = calcolaEta(persona)
+    document.getElementById("risultato").innerHTML = "Nome: " + persona.nome + "; Cognome: " + persona.cognome + "; Età: " + eta + "."
+</script>
